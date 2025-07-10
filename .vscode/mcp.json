@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "simple_mcp_server": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["server.py"]
+    }
+  }
+}
