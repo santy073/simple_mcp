@@ -16,9 +16,12 @@ MCP_SERVER_URL = "http://127.0.0.1:8000/mcp/"
 
 async def main():
     client = Client(MCP_SERVER_URL)
+
     # await client.ping()  # Test the connection to the server
     async with client:
         print("Welcome to the MCP Calculator!")
+        list_tools = await client.list_tools()  # List available tools
+        print("Available tools:", list_tools)
         operation = input("Enter operation - add (A), subtract(S), multiply(M), divide(D): ").strip().lower()
         if operation not in {"a", "s", "m", "d"}:
             print("Invalid operation.")
@@ -39,7 +42,7 @@ async def main():
             operation="divide"
         # Now print the result
         try:
-            result = await client.call_tool(operation, arguments={"a": a, "b": b})
+            result = await client.call_tool(operation, arguments={"num1": a, "num2": b})
             if result is None:
                 print("No result returned from the server.")
             else:

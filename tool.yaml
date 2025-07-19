@@ -1,0 +1,19 @@
+featurestore:
+  add:
+    - type: tool
+    - inbuilt_name: add
+    - tool_name: add
+    - description: Add two input numbers and return the result.
+    - params:
+        num1: float
+        num2: float
+    - return: float
+  subtract:
+    - type: tool
+    - inbuilt_name: subtract
+    - tool_name: subtract
+    - description: subtract two input numbers and return the result.
+    - params:
+        num1: float
+        num2: float
+    - return: float
