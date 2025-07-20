@@ -1,5 +1,5 @@
 from server import DB_CONNECTIONS
-import server as mcp
+from fastmcp import FastMCP
 
 
 # Tool for database operations
@@ -49,19 +49,19 @@ def insert_data(tool_config: dict, connection_config: dict):
 
 
 
-def make_db_tools(tool_name: str, tool_config: dict, connection_config:dict):
+def make_db_tools(tool_name: str, tool_config: dict, connection_config:dict, mcp:FastMCP):
     """
     Decorator to create a tool function with the given name, description, parameters, and return type.
     """
-    inbuilt_name = tool_config.get("inbuilt_name")
+    inbuilt_name = tool_config.get("type")
     description = tool_config.get("description", "")
     if inbuilt_name == "fetch_data":
         @mcp.tool(name=tool_name, description=description)
-        def tool_func(tool_config: dict, connection_config: dict) -> dict:
+        def tool_func(query: str) -> dict:
             return fetch_data(tool_config=tool_config, connection_config=connection_config)
     elif inbuilt_name == "insert_data":
         @mcp.tool(name=tool_name, description=description)
-        def tool_func(tool_config: dict, connection_config: dict) -> dict:
+        def tool_func(query: str) -> dict:
             return insert_data(tool_config=tool_config, connection_config=connection_config)
     elif inbuilt_name == "multiply":
         @mcp.tool(name=tool_name, description=description)
@@ -76,5 +76,5 @@ def make_db_tools(tool_name: str, tool_config: dict, connection_config:dict):
                 raise ValueError("Division by zero is not allowed.")
             return num1 / num2
     else:
-        raise ValueError(f"Unknown inbuilt name: {inbuilt_name}")
+        raise ValueError(f"Unknown Tool type name: {inbuilt_name}. Check documentaton for allowed tool types")
     return tool_func

@@ -54,7 +54,6 @@ class Server():
         elif transport == "sse":
             self.mcp.run(transport=transport)
         print("Server is running...")
-        print("Registering tools...")
 
     def register_connections(self, connection_dict: dict):
         """ Registers database connections from the provided dictionary.
@@ -66,7 +65,7 @@ class Server():
         if not isinstance(connection_dict, dict) or len(connection_dict) == 0:
             raise ValueError("Invalid connection dictionary. It should be a non-empty dictionary.")
         for key in connection_dict:
-            print(f"Database System : {key}")
+            print(f" \n ********** Database System : {key} **********\n")
             if key not in DATABASE_ALLOWED:
                 raise ValueError(f"Unsupported database type: {key}. Supported types are {DATABASE_ALLOWED}.")
             connection_list = connection_dict[key]
@@ -74,9 +73,11 @@ class Server():
             # if duplicate connection name exists in list raise error
             for connection_name in connection_list:
                 connection_pool = {}
+                print(f"Connection Name: {connection_name}")
                 # Make a databasemanager instance for each connection
                 connection_config = connection_list[connection_name]
-                db_url = utils.prepare_db_url(connection_config)
+                print(f"Connection Configuration: {connection_config} \n")
+                db_url = utils.prepare_db_url(connection_details=connection_config,  type=key)
 
                 # Initialize connections in MCP
                 db_manager = DatabaseManager(db_url=db_url)
@@ -99,7 +100,7 @@ class Server():
         if not isinstance(tool_config, dict) or len(tool_config) == 0:
             raise ValueError(f"Invalid configuration for tool {tool_name}. It should be a non-empty dictionary.")
                 
-        tools.make_db_tools(tool_name, tool_config)
+        tools.make_db_tools(tool_name, tool_config, DB_CONNECTIONS, self.mcp)
         print(f"Tool {tool_name} registered successfully.")
 
     
@@ -121,9 +122,9 @@ if __name__ == "__main__":
 
     # Register tools for the MCP Server
     tool_yaml_file = server.server_config["tools"]
-    tools_dict = utils.read_yaml_file(tool_yaml_file)
+    tools_dict = utils.read_yaml_file(tool_yaml_file)["tools"]
     for tool_name, tool_config in tools_dict.items():
-        if tool_name not in TOOLS_ALLOWED:
-            raise ValueError(f"Unsupported tool: {tool_name}. Supported tools are {TOOLS_ALLOWED}.")
         print(f"Registering tool: {tool_name}")
         server.register_tool(tool_name, tool_config)
+
+    server.run()

@@ -2,17 +2,17 @@ import asyncio
 from fastmcp import Client
 import requests
 
-async def example():
-    async with Client("http://127.0.0.1:8000/mcp/") as client:
-        await client.ping()
+# async def example():
+#     async with Client("http://127.0.0.1:8000/mcp/") as client:
+#         await client.ping()
 
-if __name__ == "__main__":
-    asyncio.run(example())
-
-
+# if __name__ == "__main__":
+#     asyncio.run(example())
 
 
-MCP_SERVER_URL = "http://127.0.0.1:8000/mcp/"
+
+
+MCP_SERVER_URL = "http://localhost:8000/mcp/"
 
 async def main():
     client = Client(MCP_SERVER_URL)

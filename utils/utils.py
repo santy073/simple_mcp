@@ -1,6 +1,7 @@
 import yaml
 import os
 
+
 def read_yaml_file(yaml_file_name: str) -> dict:
     """
     Reads a YAML file and returns its content.
@@ -18,7 +19,7 @@ def read_yaml_file(yaml_file_name: str) -> dict:
         return yaml.load(file, Loader=yaml.FullLoader)
     
 
-def prepare_db_url(connection_details: dict) -> str:
+def prepare_db_url(connection_details: dict, type: str) -> str:
     """
     Prepares a database connection URL based on the provided parameters.
     Args:
@@ -31,18 +32,21 @@ def prepare_db_url(connection_details: dict) -> str:
     Returns:
         A formatted database connection URL.
     """
-    db_type = connection_details.get("db_type")
     host = connection_details.get("host")
     port = connection_details.get("port")
     database = connection_details.get("database")
     user = connection_details.get("user")
     password = connection_details.get("password")
 
-    if db_type == "postgres":
+    if type == "postgres":
         return f"postgresql://{user}:{password}@{host}:{port}/{database}"
-    elif db_type == "mysql":
+    elif type == "mysql":
         return f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
-    elif db_type == "oracle":
-        return f"oracle+cx_oracle://{user}:{password}@{host}:{port}/{database}"
+    elif type == "oracle":
+        return f"oracle+oracledb://{user}:{password}@{host}:{port}/{database}"
+    elif type == "mssql":
+        return f"mssql+pyodbc://{user}:{password}@{host}:{port}/{database}?driver=ODBC+Driver+17+for+SQL+Server"
+    elif type == "sqlite":
+        return f"sqlite:///{database}"
     else:
-        raise ValueError(f"Unsupported database type: {db_type}")
+        raise ValueError(f"Unsupported database type: {type}.")
