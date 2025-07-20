@@ -70,9 +70,9 @@ class Server():
                 raise ValueError(f"Unsupported database type: {key}. Supported types are {DATABASE_ALLOWED}.")
             connection_list = connection_dict[key]
 
-            # if duplicate connection name exists in list raise error
+            # Build the connection object
+            db_manager_obj_dict = {}
             for connection_name in connection_list:
-                connection_pool = {}
                 print(f"Connection Name: {connection_name}")
                 # Make a databasemanager instance for each connection
                 connection_config = connection_list[connection_name]
@@ -82,8 +82,8 @@ class Server():
                 # Initialize connections in MCP
                 db_manager = DatabaseManager(db_url=db_url)
                 db_manager.initialize_connection_pool(pool_size=5, max_overflow=10, pool_timeout=30)
-                connection_pool[connection_name] = DatabaseManager(db_url=db_url)
-            DB_CONNECTIONS[key] = connection_pool
+                db_manager_obj_dict[connection_name] = DatabaseManager(db_url=db_url)
+            DB_CONNECTIONS[key] = db_manager_obj_dict
 
         self.server_config["db_connections"] = connection_dict
 
