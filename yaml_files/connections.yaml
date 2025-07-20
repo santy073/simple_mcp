@@ -1,0 +1,61 @@
+oracle:
+  pool_size: 10
+  timeout: 30
+  max_overflow: 5
+  lob_dev:
+    type: oracle
+    hostname: "localhost"
+    port: 1521
+    service_name: "orclpdb1"
+    username: "admin"
+    password: "password"
+  lob_uat:
+    type: oracle
+    hostname: "localhost"
+    port: 1521
+    service_name: "orclpdb1"
+    username: "admin"
+    password: "password"
+  lob_prod:
+    type: oracle
+    hostname: "localhost"
+    port: 1521
+    service_name: "orclpdb1"
+    username: "admin"
+    password: "password"
+postgres:
+  pool_size: 10
+  timeout: 30
+  max_overflow: 5
+  lob_dev:
+    type: postgres
+    hostname: "localhost"
+    port: 5432
+    database: "lob_dev_db"
+    username: "admin"
+    password: "password"
+mssql:
+  pool_size: 10
+  timeout: 30
+  max_overflow: 5
+  lob_dev:
+    type: mssql
+    hostname: "localhost"
+    port: 1433
+    database: "lob_dev_db"
+    username: "admin"
+    password: "password"
+  lob_uat:
+    type: mssql
+    hostname: "localhost"
+    port: 1433
+    database: "lob_uat_db"
+    username: "admin"
+    password: "password"
+  lob_prod:
+    type: mssql
+    hostname: "localhost"
+    port: 1433
+    database: "lob_prod_db"
+    username: "admin"
+    password: "password"

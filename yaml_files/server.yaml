@@ -1,0 +1,9 @@
+server:
+  sdp_mcp_server:
+    type: server
+    description: MCP server which hosts variety of tools for database activity
+    database: "D:\\GenerativeAI\\Source_code\\simple_mcp\\yaml_files\\connections.yaml"
+    transport: http
+    port: 8000
+    host: "localhost"
+    tools: "D:\\GenerativeAI\\Source_code\\simple_mcp\\yaml_files\\tools.yaml"

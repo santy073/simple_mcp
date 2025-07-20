@@ -1,0 +1,13 @@
+tools:
+  fetch_app_details:
+    type: fetch_data
+    description: Fetches details of a specific app from the database.
+    source: oracle
+    connection: lob_dev
+    query: SELECT * FROM apps WHERE app_id = :app_id;
+  fetch_team_details:
+    type: fetch_data
+    description: Fetches details of a specific team using the app.
+    source: oracle
+    connection: lob_dev
+    query: SELECT * FROM teams WHERE app_id = :app_id AND team_id = :team_id;
